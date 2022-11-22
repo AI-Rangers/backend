@@ -130,3 +130,38 @@ dmypy.json
 
 # Ignore the default SQLite database.
 *.sqlite3*
+
+# Ignore .DS_Store.
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+
+# OS or Editor folders
+._*
+.cache
+.idea
+.project
+.settings
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+Thumbs.db
+ehthumbs.db
+.Spotlight-V100
+.Trashes
+*.swp
+._*
