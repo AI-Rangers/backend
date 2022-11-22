@@ -1,4 +1,4 @@
-from models import Student
+from .models import Student
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 StudentIn_Pydantic = pydantic_model_creator(

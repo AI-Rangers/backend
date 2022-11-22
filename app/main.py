@@ -4,8 +4,9 @@ from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from models import Student
-from serializers import StudentIn_Pydantic, StudentOut_Pydantic
+
+from .models import Student
+from .serializers import StudentIn_Pydantic, StudentOut_Pydantic
 
 app = FastAPI()
 
@@ -20,7 +21,7 @@ app.add_middleware(
 register_tortoise(
     app,
     db_url='sqlite://db.sqlite3',
-    modules={'models': ['main']},
+    modules={'models': ['app.main']},
     generate_schemas=True,
     add_exception_handlers=True
 )
