@@ -1,1 +1,7 @@
 print("Hi, I am 06")
+print("Hi, I am 0622")
+print("Hi, I am 06222")
+print("Hi, I am 06222")
+print("Hi, I am 0622")
+print("Hi, I am 061234")
+print("Hi, I am 0641414")
