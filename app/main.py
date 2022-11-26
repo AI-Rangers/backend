@@ -11,7 +11,7 @@ if os.getenv('API_ENV') != 'production':
 
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
-TK = os.getenv('token')
+AAA = os.getenv('AAA')
 LO = os.getenv('location')
 
 
@@ -49,7 +49,7 @@ app = FastAPI()
 def read_env():
     return {"ACCESS_TOKEN": LINE_CHANNEL_ACCESS_TOKEN,
             "LINE_CHANNEL_SECRET": LINE_CHANNEL_SECRET,
-            "token": TK,
+            "AAA": AAA,
             "location": LO }
 
 @app.get("/")

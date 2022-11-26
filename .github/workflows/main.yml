@@ -40,4 +40,5 @@ jobs:
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             name: fastapi-sampleapp
             location: 'west europe'
-            token: ${{ secrets.access-token }}
+          env:
+            AAA: 'AAA'
