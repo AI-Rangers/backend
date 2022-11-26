@@ -40,4 +40,5 @@ jobs:
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             name: fastapi-sampleapp
             location: 'west europe'
-            secure-environment-variables: key1=${{ secrets.ENV_VAL1 }} key2=${{ secrets.ENV_VAL2 }}
+            environment-variables: API_ENV=production
+            secure-environment-variables: LINE_CHANNEL_ACCESS_TOKEN=${{ secrets.ENV_VAL1 }} LINE_CHANNEL_SECRET=${{ secrets.ENV_VAL2 }}
