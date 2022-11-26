@@ -1,5 +1,20 @@
 from typing import Union
 from fastapi import FastAPI, status
+import sys
+# Python version
+version = f"{sys.version_info.major}.{sys.version_info.minor}"
+
+import os
+if os.getenv('API_ENV') != 'production':
+    from dotenv import load_dotenv
+    load_dotenv()
+
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
+LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
+
+print("ACCESS_TOKEN : ",LINE_CHANNEL_ACCESS_TOKEN)
+print("CHANNEL_SECRET : ",LINE_CHANNEL_SECRET)
+
 # from tortoise.contrib.fastapi import register_tortoise
 # from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.encoders import jsonable_encoder
@@ -7,6 +22,7 @@ from fastapi import FastAPI, status
 
 # from .models import Student
 # from .serializers import StudentIn_Pydantic, StudentOut_Pydantic
+
 
 app = FastAPI()
 
@@ -26,9 +42,15 @@ app = FastAPI()
 #     add_exception_handlers=True
 # )
 
+@app.get("/env")
+def read_env():
+    return {"ACCESS_TOKEN": LINE_CHANNEL_ACCESS_TOKEN,
+            "LINE_CHANNEL_SECRET": LINE_CHANNEL_SECRET }
+
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+async def read_root():
+    message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
+    return {"message": message}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
