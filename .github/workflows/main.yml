@@ -3,6 +3,7 @@ name: PythonAppAzureDeployment
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
+        environment: production
         steps:
         # checkout the repo
         - name: 'Checkout GitHub Action'
@@ -39,3 +40,4 @@ jobs:
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             name: fastapi-sampleapp
             location: 'west europe'
+            token: ${{ secrets.access-token }}
