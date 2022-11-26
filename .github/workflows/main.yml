@@ -41,4 +41,4 @@ jobs:
             name: fastapi-sampleapp
             location: 'west europe'
             environment-variables: API_ENV=production
-            secure-environment-variables: LINE_CHANNEL_ACCESS_TOKEN=${{ secrets.ENV_VAL1 }} LINE_CHANNEL_SECRET=${{ secrets.ENV_VAL2 }}
+            secure-environment-variables: LINE_CHANNEL_ACCESS_TOKEN=${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }} LINE_CHANNEL_SECRET=${{ secrets.LINE_CHANNEL_SECRET }}
