@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, status
-from line.urls import line_app
+from .line.urls import line_app
 import sys
 # Python version
 version = f"{sys.version_info.major}.{sys.version_info.minor}"
