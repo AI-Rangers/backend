@@ -1,5 +1,0 @@
-print("Hi, I am 06")
-print("Hi, I am 0622")
-print("Hi, I am 061")
-print("Hi, I am 062")
-print("Hi, I am 066")
