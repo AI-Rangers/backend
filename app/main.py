@@ -1,6 +1,8 @@
 from typing import Union
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, File, UploadFile
 from .line.urls import line_app
+from .ai.classification import predict, read_imagefile
+
 import sys
 # Python version
 version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -43,6 +45,18 @@ async def read_root():
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+@app.post("/predict/image")
+async def predict_api(file: UploadFile = File(...)):
+    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
+    if not extension:
+        return "圖片請用 jpg、jpeg 或 png 格式!"
+    image = read_imagefile(await file.read())
+    prediction = predict(image)
+
+    return prediction
+
+
 
 # @app.post('/api/v1/add-student/')
 # async def add_student(student: StudentOut_Pydantic):

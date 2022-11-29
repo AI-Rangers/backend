@@ -4,6 +4,10 @@ pydantic==1.10.2
 Starlette==0.21.0
 line-bot-sdk==2.3.0
 python-dotenv==0.21.0
+numpy==1.23.5
+tensorflow==2.11.0
+Pillow==9.3.0
+
 # aiosqlite==0.17.0
 # anyio==3.6.2
 # click==8.1.3
