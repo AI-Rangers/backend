@@ -1,5 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, status, File, UploadFile, Request, WebSocket, WebSocketDisconnect
+from fastapi.staticfiles import StaticFiles
 from .line.urls import line_app
 from .ai.classification import predict, read_imagefile
 import cv2
@@ -16,6 +17,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # from .serializers import StudentIn_Pydantic, StudentOut_Pydantic
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 origins = ["*"]
 app.add_middleware(
@@ -57,7 +59,8 @@ async def predict_api(file: UploadFile = File(...)):
     return prediction
 
 
-camera = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+# camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+camera = cv2.VideoCapture(0)
 
 @app.websocket("/ws")
 async def get_stream(websocket: WebSocket):
@@ -73,6 +76,30 @@ async def get_stream(websocket: WebSocket):
                 await websocket.send_bytes(buffer.tobytes())
     except WebSocketDisconnect:
         print("Client disconnected")   
+
+# from fastapi.responses import StreamingResponse
+# def gen_frames():
+#     while True:
+#         success, frame = camera.read()
+#         if not success:
+#             print("fail")
+#             break
+#         else:
+#             ret, buffer = cv2.imencode('.jpg', frame)
+#             frame = buffer.tobytes()
+#             yield (b'--frame\r\n'
+#                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+# @app.get('/video_feed')
+# def video_feed():
+#     return StreamingResponse(gen_frames(), media_type='multipart/x-mixed-replace; boundary=frame')
+
+# from fastapi.templating import Jinja2Templates
+# templates = Jinja2Templates(directory="templates")
+
+# @app.get('/v')
+# def index(request: Request):
+#     return templates.TemplateResponse("index.html", {"request": request})
 
 
 # @app.post('/api/v1/add-student/')
