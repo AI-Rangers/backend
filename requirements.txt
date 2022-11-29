@@ -6,13 +6,18 @@ pydantic==1.10.2
 Starlette==0.21.0
 line-bot-sdk==2.3.0
 python-dotenv==0.21.0
+wheel
 numpy==1.23.5
+# numpy==1.21.4
+# numpy
 tensorflow==2.11.0
 python-multipart==0.0.5
 Pillow==9.3.0
-# cv2
-opencv-python==4.6.0.66
-
+# install cv2
+# opencv-python==4.6.0.66
+# 4.3.0.38, 4.4.0.46, 4.5.5.64
+opencv-python==4.4.0.46
+# git+https://github.com/opencv/opencv-python@3725898#egg=opencv-python
 
 # aiosqlite==0.17.0
 # anyio==3.6.2
