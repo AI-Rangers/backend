@@ -4,6 +4,20 @@ backend
 ### Windwos
 
 ```shell
+# 修改 WSL (Ubuntu) 預設帳號
+# 預設沒有這個檔案，自已新增
+$ vim /etc/wsl.conf 
+```
+
+```shell
+# 在 wsl.conf 檔案加入這段
+# 不是 root 帳號，當初安裝時，系統新增的帳號
+# Set the user when launching a distribution with WSL.
+[user]
+default = 你的WSL帳號
+```
+
+```shell
 # 在 WSL (Ubuntu) 上安裝 python (pyenv) 
 $ sudo apt-get install git gcc make openssl libssl-dev libbz2-dev libreadline-dev libsqlite3-dev zlib1g-dev libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
 
@@ -45,7 +59,7 @@ $ pyenv install -v 3.8.15
 # 設定全域的 Python 版本
 $ pyenv global 3.8.15
 
-$ git clone git@github.com:AI-Rangers/backend.git                           ─╯
+$ git clone git@github.com:AI-Rangers/backend.git
 $ cd backend
 # 設定區域的 Python 版本
 $ pyenv local 3.8.15
