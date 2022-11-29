@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # Setup gcloud CLI
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
       with:
         version: '410.0.0'
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
