@@ -3,10 +3,8 @@ backend
 
 ### Windwos
 
-[Install python (pyenv) on WSL (Ubuntu)](https://www.techtronic.us/install-python-pyenv-on-wsl-ubuntu/)
-
 ```shell
-# 安裝
+# 在 WSL (Ubuntu) 上安裝 python (pyenv) 
 $ sudo apt-get install git gcc make openssl libssl-dev libbz2-dev libreadline-dev libsqlite3-dev zlib1g-dev libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
 
 $ curl https://pyenv.run | bash
@@ -34,6 +32,12 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+```
+
+```shell
+# source 重新執行剛修改的初始化文件，使之立即生效
+$ source ~/.profile
+$ source ~/.bashrc
 ```
 
 ```shell
