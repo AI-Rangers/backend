@@ -8,24 +8,24 @@ import sys
 version = f"{sys.version_info.major}.{sys.version_info.minor}"
 
 # from tortoise.contrib.fastapi import register_tortoise
-# from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.encoders import jsonable_encoder
 # from fastapi.responses import JSONResponse
 
 # from .models import Student
 # from .serializers import StudentIn_Pydantic, StudentOut_Pydantic
 
-
 app = FastAPI()
 
-# origins = ["*"]
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=False,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # register_tortoise(
 #     app,
 #     db_url='sqlite://db.sqlite3',
