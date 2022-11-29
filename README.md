@@ -26,8 +26,8 @@ $ curl https://pyenv.run | bash
 ### Mac
 
 ```
-brew update
-brew install pyenv
+$ brew update
+$ brew install pyenv
 ```
 ### Setup
 

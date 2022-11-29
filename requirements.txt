@@ -11,9 +11,8 @@ numpy==1.23.5
 tensorflow==2.11.0
 python-multipart==0.0.5
 Pillow==9.3.0
-# 安裝 cv2 (opencv-python)
-opencv-python==4.6.0.66
-# 4.3.0.38, 4.4.0.46, 4.5.5.64
+# 安裝 cv2 (opencv-python) # 4.3.0.38, 4.4.0.46, 4.5.5.64, 4.6.0.66
+opencv-python==4.4.0.46
 
 # aiosqlite==0.17.0
 # anyio==3.6.2
