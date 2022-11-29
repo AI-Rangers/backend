@@ -1,45 +1,28 @@
-on: [push]
-name: PythonAppAzureDeployment
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+    - master
+
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        environment: production
-        steps:
-        # checkout the repo
-        - name: 'Checkout GitHub Action'
-          uses: actions/checkout@main
+  setup-build-deploy:
+    name: Setup, Build, and Deploy
+    runs-on: ubuntu-latest
 
-        - name: Setup Node.js
-          uses: actions/setup-node@v1
-          with:
-            node-version: "16.x"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
 
-        - name: 'Login via Azure CLI'
-          uses: azure/login@v1
-          with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '286.0.0'
+        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        export_default_credentials: true
         
-        - name: 'Build and push image'
-          uses: azure/docker-login@v1
-          with:
-            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            username: ${{ secrets.REGISTRY_USERNAME }}
-            password: ${{ secrets.REGISTRY_PASSWORD }}
-        - run: |
-            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
-            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
-        
-        - name: 'Deploy to Azure Container Instances'
-          uses: 'azure/aci-deploy@v1'
-          with:
-            resource-group: ${{ secrets.RESOURCE_GROUP }}
-            # dns-name-label: ${{ secrets.RESOURCE_GROUP }}to${{ github.run_number }}
-            dns-name-label: ${{ secrets.RESOURCE_GROUP }}bot
-            image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
-            registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            registry-username: ${{ secrets.REGISTRY_USERNAME }}
-            registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            name: fastapi-sampleapp
-            location: 'west europe'
-            environment-variables: API_ENV=production
-            secure-environment-variables: LINE_CHANNEL_ACCESS_TOKEN=${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }} LINE_CHANNEL_SECRET=${{ secrets.LINE_CHANNEL_SECRET }}
+    # Print gcloud info
+    - name: Info
+      run: gcloud info
