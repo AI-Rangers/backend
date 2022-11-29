@@ -1,8 +1,8 @@
 from typing import Union
-from fastapi import FastAPI, status, File, UploadFile
+from fastapi import FastAPI, status, File, UploadFile, Request, WebSocket, WebSocketDisconnect
 from .line.urls import line_app
 from .ai.classification import predict, read_imagefile
-
+import cv2
 import sys
 # Python version
 version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -56,6 +56,23 @@ async def predict_api(file: UploadFile = File(...)):
 
     return prediction
 
+
+camera = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+
+@app.websocket("/ws")
+async def get_stream(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            success, frame = camera.read()
+            if not success:
+                break
+            else:
+                ret, buffer = cv2.imencode('.jpg', frame)
+                await websocket.send_text("some text")
+                await websocket.send_bytes(buffer.tobytes())
+    except WebSocketDisconnect:
+        print("Client disconnected")   
 
 
 # @app.post('/api/v1/add-student/')
