@@ -19,4 +19,4 @@ RUN pip install --upgrade pip setuptools && \
 # CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--proxy-headers"]
 
 # CMD exec gunicorn --bind :$PORT --workers 2 --threads 8 --timeout 0 app.main:app
-CMD exec gunicorn --bind :$PORT app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker
+CMD exec gunicorn --preload --bind :$PORT app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker
