@@ -1,7 +1,13 @@
 FROM tiangolo/uvicorn-gunicorn:python3.8
 
-COPY ./app /app
-COPY requirements.txt .
+ENV PYTHONUNBUFFERED True
+
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
+ 
+# COPY ./app /app
+# COPY requirements.txt .
 RUN pip install --upgrade pip setuptools && \
     pip --no-cache-dir install -r requirements.txt
  
