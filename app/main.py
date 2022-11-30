@@ -5,6 +5,8 @@ from .line.urls import line_app
 from .ai.classification import predict, read_imagefile
 import cv2
 import sys
+import os
+import uvicorn
 # Python version
 version = f"{sys.version_info.major}.{sys.version_info.minor}"
 
@@ -155,3 +157,6 @@ async def get_stream(websocket: WebSocket):
 #         status_code=status.HTTP_201_CREATED,
 #         content=json_data
 #     )
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

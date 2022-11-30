@@ -18,5 +18,5 @@ RUN pip install --upgrade pip setuptools && \
 # If running behind a proxy like Nginx or Traefik add --proxy-headers
 # CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--proxy-headers"]
 
-# CMD exec gunicorn --bind :$PORT --workers 2 --threads 8 --timeout 0 app.main:app
-CMD exec gunicorn --preload --bind :$PORT app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker
+# CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app.main:app
+CMD exec gunicorn --preload --bind :$PORT app.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker
