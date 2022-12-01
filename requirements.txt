@@ -15,6 +15,7 @@ Pillow==9.3.0
 # opencv-python==4.4.0.46
 opencv-python==4.5.5.64
 
+Jinja2
 # aiosqlite==0.17.0
 # anyio==3.6.2
 # click==8.1.3
