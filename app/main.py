@@ -77,31 +77,31 @@ async def get_stream(websocket: WebSocket):
                 await websocket.send_text("some text")
                 await websocket.send_bytes(buffer.tobytes())
     except WebSocketDisconnect:
-        print("Client disconnected")   
+        print("Client disconnected")
 
-# from fastapi.responses import StreamingResponse
-# def gen_frames():
-#     while True:
-#         success, frame = camera.read()
-#         if not success:
-#             print("fail")
-#             break
-#         else:
-#             ret, buffer = cv2.imencode('.jpg', frame)
-#             frame = buffer.tobytes()
-#             yield (b'--frame\r\n'
-#                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+from fastapi.responses import StreamingResponse
+def gen_frames():
+    while True:
+        success, frame = camera.read()
+        if not success:
+            print("fail")
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-# @app.get('/video_feed')
-# def video_feed():
-#     return StreamingResponse(gen_frames(), media_type='multipart/x-mixed-replace; boundary=frame')
+@app.get('/video_feed')
+def video_feed():
+    return StreamingResponse(gen_frames(), media_type='multipart/x-mixed-replace; boundary=frame')
 
-# from fastapi.templating import Jinja2Templates
-# templates = Jinja2Templates(directory="templates")
+from fastapi.templating import Jinja2Templates
+templates = Jinja2Templates(directory="templates")
 
-# @app.get('/v')
-# def index(request: Request):
-#     return templates.TemplateResponse("index.html", {"request": request})
+@app.get('/v')
+def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 # @app.post('/api/v1/add-student/')
