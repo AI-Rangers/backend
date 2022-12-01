@@ -20,7 +20,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-if os.getenv('API_ENV') != 'production':
+if os.getenv('API_ENV') == 'production':
     # from werkzeug.contrib.fixers import ProxyFix
     from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
     app.add_middleware(HTTPSRedirectMiddleware)
@@ -104,6 +104,12 @@ def video_feed():
 
 from fastapi.templating import Jinja2Templates
 templates = Jinja2Templates(directory="templates")
+
+def https_url_for(request: Request, name: str, **path_params: any) -> str:
+    http_url = request.url_for(name, **path_params)
+    # Replace 'http' with 'https'
+    return http_url.replace("http", "https", 1)
+templates.env.globals["https_url_for"] = https_url_for
 
 @app.get('/v')
 def index(request: Request):
