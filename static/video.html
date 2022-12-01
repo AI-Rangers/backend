@@ -9,7 +9,7 @@
         <script>
             // https://backend-fxnd3iqy5q-de.a.run.app/static/video.html
             // let ws = new WebSocket("ws://localhost:8000/ws");
-            let ws = new WebSocket("ws://backend-fxnd3iqy5q-de.a.run.app/ws");
+            let ws = new WebSocket("wss://backend-fxnd3iqy5q-de.a.run.app/ws");
             let image = document.getElementById("frame");
             image.onload = function(){
                 URL.revokeObjectURL(this.src); // release the blob URL once the image is loaded
