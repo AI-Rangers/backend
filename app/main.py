@@ -19,6 +19,12 @@ from fastapi.middleware.cors import CORSMiddleware
 # from .serializers import StudentIn_Pydantic, StudentOut_Pydantic
 
 app = FastAPI()
+
+if os.getenv('API_ENV') != 'production':
+    # from werkzeug.contrib.fixers import ProxyFix
+    from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+    app.add_middleware(HTTPSRedirectMiddleware)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 origins = ["*"]
