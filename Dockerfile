@@ -14,6 +14,7 @@ RUN pip install --upgrade pip setuptools && \
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6 libgl1-mesa-glx libgl1 -y
 RUN pip install opencv-python-headless
+RUN pip install -U opencv-python
 
 # COPY requirements.txt /tmp/requirements.txt
 # RUN pip install --no-cache-dir -r /tmp/requirements.txt
