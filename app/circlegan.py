@@ -423,8 +423,8 @@ cycle_gan_model.compile(
 
 # Load the checkpoints
 cycle_gan_model.built = True
-cycle_gan_model.load_weights('app/ai/model/liGan.h5')
-
+# cycle_gan_model.load_weights('app/ai/model/liGan.h5')
+cycle_gan_model.load_weights('app/ai/model/EfficientNetV2B3_1128.h5')
 
 # Predict and transfer images
 def style_transfer(img_path):
