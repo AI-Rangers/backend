@@ -3,12 +3,16 @@ from io import BytesIO
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from tensorflow.keras.applications.imagenet_utils import decode_predictions
+# from tensorflow.keras.applications.imagenet_utils import decode_predictions
+from tf.keras.applications.efficientnet_v2 import decode_predictions
 
 model = None
 
 def load_model():
-    model = tf.keras.applications.MobileNetV2(weights="imagenet")
+    # model = tf.keras.applications.MobileNetV2(weights="imagenet")
+    # 從 HDF5 檔案中載入模型
+    model = tf.contrib.keras.models.load_model('app/ai/model/EfficientNetV2B3_1128.h5')
+
     print("Model loaded")
     return model
 
