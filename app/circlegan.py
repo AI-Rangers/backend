@@ -1,7 +1,7 @@
 import os
 from glob import glob
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 import tensorflow as tf
 from tensorflow import keras
@@ -423,7 +423,7 @@ cycle_gan_model.compile(
 
 # Load the checkpoints
 cycle_gan_model.built = True
-cycle_gan_model.load_weights('model/liGan.h5')
+cycle_gan_model.load_weights('app/ai/model/liGan.h5')
 
 
 # Predict and transfer images

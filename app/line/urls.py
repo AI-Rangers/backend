@@ -3,7 +3,7 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from . import message_event, user_event, config
-import circlegan
+from .. import circlegan
 from google.cloud import storage
 
 
@@ -78,6 +78,8 @@ def handle_image_message(event):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_filename(style_image_path)
+
+    img_url = ""
 
     # 發送風格轉換的圖片給用戶
     img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)

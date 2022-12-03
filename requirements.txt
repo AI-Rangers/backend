@@ -13,7 +13,7 @@ python-multipart==0.0.5
 Pillow==9.3.0
 # 安裝 cv2 (opencv-python) # 4.3.0.38, 4.4.0.46, 4.5.5.64, 4.6.0.66
 # opencv-python==4.4.0.46
-opencv-python==4.5.5.64
+opencv-python==4.3.0.38
 
 Jinja2
 # aiosqlite==0.17.0
@@ -31,6 +31,6 @@ Jinja2
 # gunicorn==20.1.0
 gunicorn
 
-
+tensorflow_datasets
 tensorflow_addons
 google-cloud-storage
