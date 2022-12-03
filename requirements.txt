@@ -34,3 +34,5 @@ gunicorn
 tensorflow_datasets
 tensorflow_addons
 google-cloud-storage
+
+imutils

@@ -3,6 +3,7 @@ from fastapi import FastAPI, status, File, UploadFile, Request, WebSocket, WebSo
 from fastapi.staticfiles import StaticFiles
 from .line.urls import line_app
 from .ai.classification import predict, read_imagefile
+from .ai.styletransfer import styleTransfer
 import cv2
 import sys
 import os
@@ -63,8 +64,53 @@ async def predict_api(file: UploadFile = File(...)):
         return "圖片請用 jpg、jpeg 或 png 格式!"
     image = read_imagefile(await file.read())
     prediction = predict(image)
-
     return prediction
+
+
+
+#   "folder": "static/origin/",
+#   "file": "0aa13f63-6a69-4ddc-b342-18330f6f8b5b.jpg",
+#   "path": "static/origin/0aa13f63-6a69-4ddc-b342-18330f6f8b5b.jpg"
+
+origin_img_folder = "static/origin/"
+styled_img_folder = "static/styled/"
+
+@app.get("/img/{img_name}/style/{selected_style}")
+def get_processed_image(img_name: str, selected_style: str):
+    # if description:
+    #     book_detail.update({"book_description": "This is the description"})
+    # styleTransfer("/content/", "Cat03.jpg", "pink_style_1800.t7")
+    return styleTransfer(origin_img_folder, styled_img_folder, img_name, selected_style)
+
+@app.post("/uploadfile/")
+async def create_upload_file(
+    uploaded_file: UploadFile = File(description="A file read as UploadFile"),
+):
+    extension = uploaded_file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
+    if not extension:
+        return "圖片請用 jpg、jpeg 或 png 格式!"
+    try:
+        contents = uploaded_file.file.read()
+        file_location = f"{origin_img_folder}{uploaded_file.filename}"
+        with open(file_location, "wb+") as file_object:
+            file_object.write(contents)
+    except Exception:
+        return {"message": "There was an error uploading the file"}
+    finally:
+        uploaded_file.file.close()
+    return {
+        "info": f"file '{uploaded_file.filename}' saved at '{file_location}'",
+        "folder": origin_img_folder,
+        "file": uploaded_file.filename,
+        "path": file_location
+    }
+    # return {"message": f"Successfully uploaded {file.filename}"}
+
+
+
+
+
+
 
 
 # camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
