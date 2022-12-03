@@ -3,7 +3,7 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from . import message_event, user_event, config
-from .. import circlegan
+# from .. import circlegan
 from google.cloud import storage
 
 

@@ -421,6 +421,9 @@ cycle_gan_model.compile(
     disc_loss_fn=discriminator_loss_fn,
 )
 
+"""
+暫時註解
+
 # Load the checkpoints
 cycle_gan_model.built = True
 # cycle_gan_model.load_weights('app/ai/model/liGan.h5')
@@ -434,3 +437,5 @@ def style_transfer(img_path):
     prediction = (prediction * 127.5 + 127.5).astype(np.uint8)
     prediction = keras.preprocessing.image.array_to_img(prediction)
     return prediction
+
+"""
