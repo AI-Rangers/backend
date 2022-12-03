@@ -57,6 +57,10 @@ def handle_message(event) -> None:
     """
     message_event.handle_message(event=event)
 
+"""
+# 暫時註解
+# cycle_gan_model.load_weights 載入模型會有錯誤
+# OSError: Unable to open file (file signature not found)"
 
 @handler.add(MessageEvent, message = ImageMessage)
 def handle_image_message(event):
@@ -84,3 +88,5 @@ def handle_image_message(event):
     # 發送風格轉換的圖片給用戶
     img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
     line_bot_api.reply_message(event.reply_token, img_message)
+
+"""
