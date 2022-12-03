@@ -68,7 +68,8 @@ def handle_image_message(event):
 
     # 使用CircleGan對圖片進行風格轉換，並保存下來
     prediction = circlegan.style_transfer(temp_file_path)
-    prediction.save(event.message.id + "_transfered.png")
+    style_file_path = event.message.id + "_transfered.png"
+    prediction.save(style_file_path)
 
     # 將風格轉換的圖片上傳到 cloud storage
     storage_client = storage.Client()
@@ -76,7 +77,7 @@ def handle_image_message(event):
     destination_blob_name = f'{event.source.user_id}/image/{event.message.id}.png'
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename(temp_file_path)
+    blob.upload_from_filename(style_file_path)
 
     # 發送風格轉換的圖片給用戶
     img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
