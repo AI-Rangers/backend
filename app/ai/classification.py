@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 # from tensorflow.keras.applications.imagenet_utils import decode_predictions
-from tf.keras.applications.efficientnet_v2 import decode_predictions
+from tensorflow.keras.applications.efficientnet_v2 import decode_predictions
 
 model = None
 
