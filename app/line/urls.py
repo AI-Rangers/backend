@@ -3,6 +3,9 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from . import message_event, user_event, config
+import circlegan
+from google.cloud import storage
+
 
 line_bot_api = LineBotApi(config.LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(config.LINE_CHANNEL_SECRET)
@@ -53,3 +56,28 @@ def handle_message(event) -> None:
         event (LINE Event Object): Refer to https://developers.line.biz/en/reference/messaging-api/#message-event
     """
     message_event.handle_message(event=event)
+
+
+@handler.add(MessageEvent, message = ImageMessage)
+def handle_image_message(event):
+    image_blob = line_bot_api.get_message_content(event.message.id)
+    temp_file_path = event.message.id + '.png'
+    with open(temp_file_path, 'wb') as fd:
+        for chunk in image_blob.iter_content():
+            fd.write(chunk)
+
+    # 使用CircleGan對圖片進行風格轉換，並保存下來
+    prediction = circlegan.style_transfer(temp_file_path)
+    prediction.save(event.message.id + "_transfered.png")
+
+    # 將風格轉換的圖片上傳到 cloud storage
+    storage_client = storage.Client()
+    bucket_name = 'linebot-tibame01-storage'
+    destination_blob_name = f'{event.source.user_id}/image/{event.message.id}.png'
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+    blob.upload_from_filename(temp_file_path)
+
+    # 發送風格轉換的圖片給用戶
+    img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
+    line_bot_api.reply_message(event.reply_token, img_message)

@@ -30,3 +30,7 @@ Jinja2
 # typing-extensions==4.4.0
 # gunicorn==20.1.0
 gunicorn
+
+
+tensorflow_addons
+google-cloud-storage
