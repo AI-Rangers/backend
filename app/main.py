@@ -66,12 +66,6 @@ async def predict_api(file: UploadFile = File(...)):
     prediction = predict(image)
     return prediction
 
-
-
-#   "folder": "static/origin/",
-#   "file": "0aa13f63-6a69-4ddc-b342-18330f6f8b5b.jpg",
-#   "path": "static/origin/0aa13f63-6a69-4ddc-b342-18330f6f8b5b.jpg"
-
 origin_img_folder = "static/origin/"
 styled_img_folder = "static/styled/"
 
@@ -80,7 +74,17 @@ def get_processed_image(img_name: str, selected_style: str):
     # if description:
     #     book_detail.update({"book_description": "This is the description"})
     # styleTransfer("/content/", "Cat03.jpg", "pink_style_1800.t7")
-    return styleTransfer(origin_img_folder, styled_img_folder, img_name, selected_style)
+    processed_image = styleTransfer(origin_img_folder, styled_img_folder, img_name, selected_style)
+    return {
+        "folder": styled_img_folder,
+        "file": processed_image,
+        "path": f"{styled_img_folder}{processed_image}"
+    }
+    # {
+    #   "folder": "static/styled/",
+    #   "file": "processedImg_00b79136-cb64-4f7f-990e-addfbcc342f3.jpg",
+    #   "path": "static/styled/processedImg_00b79136-cb64-4f7f-990e-addfbcc342f3.jpg"
+    # }
 
 @app.post("/uploadfile/")
 async def create_upload_file(
@@ -98,14 +102,18 @@ async def create_upload_file(
         return {"message": "There was an error uploading the file"}
     finally:
         uploaded_file.file.close()
+    # return {"message": f"Successfully uploaded {file.filename}"}
     return {
-        "info": f"file '{uploaded_file.filename}' saved at '{file_location}'",
+        # "info": f"file '{uploaded_file.filename}' saved at '{file_location}'",
         "folder": origin_img_folder,
         "file": uploaded_file.filename,
         "path": file_location
     }
-    # return {"message": f"Successfully uploaded {file.filename}"}
-
+    # {
+    #   "folder": "static/origin/",
+    #   "file": "00b79136-cb64-4f7f-990e-addfbcc342f3.jpg",
+    #   "path": "static/origin/00b79136-cb64-4f7f-990e-addfbcc342f3.jpg"
+    # }
 
 
 
