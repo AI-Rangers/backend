@@ -61,15 +61,15 @@ def handle_message(event) -> None:
 @handler.add(MessageEvent, message = ImageMessage)
 def handle_image_message(event):
     image_blob = line_bot_api.get_message_content(event.message.id)
-    temp_file_path = event.message.id + '.png'
-    with open(temp_file_path, 'wb') as fd:
+    raw_image_path = event.message.id + '.png'
+    with open(raw_image_path, 'wb') as fd:
         for chunk in image_blob.iter_content():
             fd.write(chunk)
 
     # 使用CircleGan對圖片進行風格轉換，並保存下來
-    prediction = circlegan.style_transfer(temp_file_path)
-    style_file_path = event.message.id + "_transfered.png"
-    prediction.save(style_file_path)
+    style_image = circlegan.style_transfer(raw_image_path)
+    style_image_path = event.message.id + "_transfered.png"
+    style_image.save(style_image_path)
 
     # 將風格轉換的圖片上傳到 cloud storage
     storage_client = storage.Client()
@@ -77,7 +77,7 @@ def handle_image_message(event):
     destination_blob_name = f'{event.source.user_id}/image/{event.message.id}.png'
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename(style_file_path)
+    blob.upload_from_filename(style_image_path)
 
     # 發送風格轉換的圖片給用戶
     img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
