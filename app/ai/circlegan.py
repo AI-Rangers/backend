@@ -421,16 +421,24 @@ cycle_gan_model.compile(
     disc_loss_fn=discriminator_loss_fn,
 )
 
-# Load the checkpoints
-cycle_gan_model.built = True
-cycle_gan_model.load_weights('app/ai/model/liGan.h5')
-# cycle_gan_model.load_weights('app/ai/model/EfficientNetV2B3_1128.h5')
+model = None
+
+def load_model():
+    # Load the checkpoints
+    cycle_gan_model.built = True
+    cycle_gan_model.load_weights('app/ai/model/liGan.h5')
+    print("Model loaded")
+    return cycle_gan_model
 
 # Predict and transfer images
 def style_transfer(img_path):
+    global model
+    if model is None:
+        model = load_model()
+
     img = load_and_preprocess_test_image(img_path)
     img = np.expand_dims(img, axis=0)
-    prediction = cycle_gan_model.gen_G(img, training=False)[0].numpy()
+    prediction = model.gen_G(img, training=False)[0].numpy()
     prediction = (prediction * 127.5 + 127.5).astype(np.uint8)
     prediction = keras.preprocessing.image.array_to_img(prediction)
     return prediction
