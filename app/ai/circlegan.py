@@ -421,14 +421,19 @@ cycle_gan_model.compile(
     disc_loss_fn=discriminator_loss_fn,
 )
 
-model = None
-
+"""
+# 暫時註解
+# cycle_gan_model.load_weights 載入模型會有錯誤
+# OSError: Unable to open file (file signature not found)"
+"""
 def load_model():
     # Load the checkpoints
     cycle_gan_model.built = True
     cycle_gan_model.load_weights('app/ai/model/liGan.h5')
     print("Model loaded")
     return cycle_gan_model
+
+model = None
 
 # Predict and transfer images
 def style_transfer(img_path):

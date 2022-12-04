@@ -71,6 +71,7 @@ async def predict_api(file: UploadFile = File(...)):
 origin_img_folder = "static/origin/"
 styled_img_folder = "static/styled/"
 
+# circlegan api 本機可以跑，部署上去跑會出現錯誤
 @app.get("/circlegan/{img_name}")
 def get_circlegan_image(img_name: str):
     raw_image_path = f"{origin_img_folder}{img_name}"
