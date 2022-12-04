@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from .line.urls import line_app
 from .ai.classification import predict, read_imagefile
 from .ai.styletransfer import styleTransfer
+from .ai.circlegan import style_transfer
+
 import cv2
 import sys
 import os
@@ -68,6 +70,27 @@ async def predict_api(file: UploadFile = File(...)):
 
 origin_img_folder = "static/origin/"
 styled_img_folder = "static/styled/"
+
+@app.get("/circlegan/{img_name}")
+def get_circlegan_image(img_name: str):
+    raw_image_path = f"{origin_img_folder}{img_name}"
+    transfered_image_path = f"{styled_img_folder}transfered_{img_name}"
+
+    style_image = style_transfer(raw_image_path)
+    style_image_path = transfered_image_path
+    style_image.save(style_image_path)
+
+    return {
+        "folder": styled_img_folder,
+        "file": f"transfered_{img_name}",
+        "path": style_image_path
+    }
+    # {
+    # "folder": "static/styled/",
+    # "file": "transfered_sample.jpg",
+    # "path": "static/styled/transfered_sample.jpg"
+    # }
+
 
 @app.get("/img/{img_name}/style/{selected_style}")
 def get_processed_image(img_name: str, selected_style: str):
