@@ -60,7 +60,8 @@ def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 @app.post("/predict/image")
-async def predict_api(file: UploadFile = File(...)):
+async def predict_api(file: UploadFile):
+# async def predict_api(file: UploadFile = File(...)):
     extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
     if not extension:
         return "圖片請用 jpg、jpeg 或 png 格式!"
@@ -111,9 +112,10 @@ def get_processed_image(img_name: str, selected_style: str):
     # }
 
 @app.post("/uploadfile/")
-async def create_upload_file(
-    uploaded_file: UploadFile = File(description="A file read as UploadFile"),
-):
+async def create_upload_file(uploaded_file: UploadFile):
+# async def create_upload_file(
+#     uploaded_file: UploadFile = File(description="A file read as UploadFile"),
+# ):
     extension = uploaded_file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
     if not extension:
         return "圖片請用 jpg、jpeg 或 png 格式!"
