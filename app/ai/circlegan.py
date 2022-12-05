@@ -433,17 +433,17 @@ def load_model():
     print("Model loaded")
     return cycle_gan_model
 
-model = None
+cg_model = None
 
 # Predict and transfer images
 def style_transfer(img_path):
-    global model
-    if model is None:
-        model = load_model()
+    global cg_model
+    if cg_model is None:
+        cg_model = load_model()
 
     img = load_and_preprocess_test_image(img_path)
     img = np.expand_dims(img, axis=0)
-    prediction = model.gen_G(img, training=False)[0].numpy()
+    prediction = cg_model.gen_G(img, training=False)[0].numpy()
     prediction = (prediction * 127.5 + 127.5).astype(np.uint8)
     prediction = keras.preprocessing.image.array_to_img(prediction)
     return prediction

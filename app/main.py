@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from .line.urls import line_app
 from .ai.classification import predict, read_imagefile
 from .ai.styletransfer import styleTransfer
-from .ai.circlegan import style_transfer
+# from .ai.circlegan import style_transfer
 
 import cv2
 import sys
@@ -72,20 +72,20 @@ origin_img_folder = "static/origin/"
 styled_img_folder = "static/styled/"
 
 # circlegan api 本機可以跑，部署上去跑會出現錯誤
-@app.get("/circlegan/{img_name}")
-def get_circlegan_image(img_name: str):
-    raw_image_path = f"{origin_img_folder}{img_name}"
-    transfered_image_path = f"{styled_img_folder}transfered_{img_name}"
+# @app.get("/circlegan/{img_name}")
+# def get_circlegan_image(img_name: str):
+#     raw_image_path = f"{origin_img_folder}{img_name}"
+#     transfered_image_path = f"{styled_img_folder}transfered_{img_name}"
 
-    style_image = style_transfer(raw_image_path)
-    style_image_path = transfered_image_path
-    style_image.save(style_image_path)
+#     style_image = style_transfer(raw_image_path)
+#     style_image_path = transfered_image_path
+#     style_image.save(style_image_path)
 
-    return {
-        "folder": styled_img_folder,
-        "file": f"transfered_{img_name}",
-        "path": style_image_path
-    }
+#     return {
+#         "folder": styled_img_folder,
+#         "file": f"transfered_{img_name}",
+#         "path": style_image_path
+#     }
     # {
     # "folder": "static/styled/",
     # "file": "transfered_sample.jpg",
