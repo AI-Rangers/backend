@@ -56,7 +56,19 @@ from os.path import exists as file_exists
 async def read_root():
     # message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
     message = f"check file exists : {file_exists('app/ai/model/EfficientNetV2B3_1128.h5')}"
-    return {"message": message}
+    # directory of the script being run
+    filepath = os.path.dirname(os.path.abspath(__file__))
+    # "/home/user/backend/app"
+
+    # current working directory
+    workpath = os.path.abspath(os.getcwd())
+    # "/home/user/backend"
+
+    return {
+        "message": message,
+        "filepath": filepath,
+        "workpath": workpath,
+    }
 
 @app.post("/exists/")
 def read_path(path: str):
@@ -66,9 +78,6 @@ def read_path(path: str):
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
-
-
-
 
 @app.post("/predict/image")
 async def predict_api(file: UploadFile):
@@ -151,12 +160,6 @@ async def create_upload_file(uploaded_file: UploadFile):
     #   "file": "00b79136-cb64-4f7f-990e-addfbcc342f3.jpg",
     #   "path": "static/origin/00b79136-cb64-4f7f-990e-addfbcc342f3.jpg"
     # }
-
-
-
-
-
-
 
 # camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 camera = cv2.VideoCapture(0)

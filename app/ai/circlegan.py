@@ -1,7 +1,7 @@
-import os
+# import os
 from glob import glob
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 import tensorflow as tf
 from tensorflow import keras
@@ -175,16 +175,30 @@ def get_resnet_generator(
     model = keras.models.Model(img_input, x, name=name)
     return model
 
+cg_model = None
+
+def load_model():
+    # Load the checkpoints
+    gen_G = get_resnet_generator(name="generator_G")
+    gen_G.load_weights('model/liGan_G.h5')
+
+    print("Model loaded")
+    return cycle_gan_model
+
 def style_transfer(img_path):
+    global cg_model
+    if cg_model is None:
+        cg_model = load_model()
+
     img = load_and_preprocess_test_image(img_path)
     img = np.expand_dims(img, axis=0)
-    prediction = gen_G2(img, training=False)[0].numpy()
+    prediction = cg_model(img, training=False)[0].numpy()
     prediction = (prediction * 127.5 + 127.5).astype(np.uint8)
     prediction = keras.preprocessing.image.array_to_img(prediction)
     return prediction
 
-gen_G = get_resnet_generator(name="generator_G")
-gen_G.load_weights('model/liGan_G.h5')
+# gen_G = get_resnet_generator(name="generator_G")
+# gen_G.load_weights('model/liGan_G.h5')
 
-prediction = style_transfer('0a855ad9-d9e8-40a6-8278-d86603b1db30.jpg')
-prediction.save("transfered.png")
+# prediction = style_transfer('0a855ad9-d9e8-40a6-8278-d86603b1db30.jpg')
+# prediction.save("transfered.png")
