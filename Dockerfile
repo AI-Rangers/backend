@@ -15,7 +15,8 @@ RUN pip install --upgrade pip setuptools && \
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6 -y
 RUN apt-get install libgl1
-RUN pip install install h5py
+# RUN pip install install h5py
+# RUN pip install versioned-hdf5
 
 # 安裝 opencv-python-headless 會導致 imshow 等涉及UI的方法不能用。
 # RUN pip install opencv-python-headless
