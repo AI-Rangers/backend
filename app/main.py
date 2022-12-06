@@ -11,7 +11,7 @@ import sys
 import os
 import uvicorn
 # Python version
-version = f"{sys.version_info.major}.{sys.version_info.minor}"
+version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 
 # from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
