@@ -1,0 +1,28 @@
+{
+    "type": "template",
+    "altText": "this is a buttons template",
+    "template": {
+      "type": "buttons",
+      "thumbnailImageUrl": "https://kids.coa.gov.tw/upload/images/kids_learning/166/03.jpg",
+      "imageAspectRatio": "square",
+      "title": "🥦第 3 題🥦",
+      "text": "十字花科的蔬菜被譽為超級食物，請問我們食用的花椰菜與青花菜是屬於？",
+      "actions": [
+        {
+          "type": "message",
+          "label": "花",
+          "text": "答對👏獲得300元購物金"
+        },
+        {
+          "type": "message",
+          "label": "葉子",
+          "text": "再接再厲💪"
+        },
+        {
+          "type": "message",
+          "label": "種子",
+          "text": "再接再厲💪"
+        }
+      ]
+    }
+  }

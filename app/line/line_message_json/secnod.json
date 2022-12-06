@@ -1,0 +1,28 @@
+{
+    "type": "template",
+    "altText": "this is a buttons template",
+    "template": {
+      "type": "buttons",
+      "thumbnailImageUrl": "https://i0.wp.com/ricelala.com/wp-content/uploads/2016-04-14-214135-90.jpg",
+      "imageAspectRatio": "square",
+      "title": "🥗第 2 題🥗",
+      "text": "請問圖中為下列哪種作物呢？",
+      "actions": [
+        {
+          "type": "message",
+          "label": "蔥",
+          "text": "再接再厲💪"
+        },
+        {
+          "type": "message",
+          "label": "茭白筍",
+          "text": "答對👏獲得200元購物金"
+        },
+        {
+          "type": "message",
+          "label": "韭菜",
+          "text": "再接再厲💪"
+        }
+      ]
+    }
+  }

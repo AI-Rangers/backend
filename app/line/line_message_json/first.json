@@ -1,0 +1,29 @@
+{
+    "type": "template",
+    "altText": "this is a buttons template",
+    "template": {
+      "type": "buttons",
+      "thumbnailImageUrl": "https://imageproxy.icook.network/resize?height=533&width=800&nocrop=false&url=https://uploads-blog.icook.network/2018/08/7e161dfe-passion-fruit-3623511_960_720-800x533.jpg&type=auto",
+      "imageAspectRatio": "square",
+      "imageSize": "cover",
+      "title": "😳第 1 題😳",
+      "text": "請問這是哪一種農作物的花？",
+      "actions": [
+        {
+          "type": "message",
+          "label": "絲瓜",
+          "text": "再接再厲💪"
+        },
+        {
+          "type": "message",
+          "label": "葡萄",
+          "text": "再接再厲💪"
+        },
+        {
+          "type": "message",
+          "label": "百香果",
+          "text": "答對👏獲得100元購物金"
+        }
+      ]
+    }
+  }
