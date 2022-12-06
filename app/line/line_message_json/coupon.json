@@ -1,0 +1,77 @@
+{
+    "type": "bubble",
+    "hero": {
+      "type": "image",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk2Pa3ajL98pTJzfOEs3SvXgVk4B_WyrEh8w&usqp=CAU",
+      "size": "full",
+      "aspectRatio": "20:13",
+      "aspectMode": "cover"
+    },
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "sm",
+      "contents": [
+        {
+          "type": "text",
+          "text": "您的專屬購物金",
+          "weight": "bold",
+          "size": "xl",
+          "color": "#213E37FF",
+          "wrap": true,
+          "contents": []
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "600",
+              "weight": "bold",
+              "size": "3xl",
+              "color": "#14CA1CFF",
+              "flex": 0,
+              "wrap": true,
+              "contents": []
+            },
+            {
+              "type": "text",
+              "text": "NT",
+              "weight": "bold",
+              "size": "sm",
+              "color": "#26AA26FF",
+              "flex": 0,
+              "wrap": true,
+              "contents": []
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "sm",
+      "contents": [
+        {
+          "type": "text",
+          "text": "本優惠券僅限使用一次",
+          "weight": "regular",
+          "size": "xs",
+          "align": "end",
+          "gravity": "top",
+          "contents": []
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "uri",
+            "label": "使用購物金",
+            "uri": "https://linecorp.com"
+          },
+          "style": "primary"
+        }
+      ]
+    }
+  }

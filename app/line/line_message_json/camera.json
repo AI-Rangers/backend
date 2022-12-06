@@ -1,0 +1,52 @@
+{
+    "type": "bubble",
+    "direction": "ltr",
+    "header": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "💰恭喜獲得600元優惠券💰",
+          "weight": "bold",
+          "align": "center",
+          "contents": []
+        }
+      ]
+    },
+    "hero": {
+      "type": "image",
+      "url": "https://imgs.gvm.com.tw/upload/gallery/20170801/5161e650b9a44ef9a5b46f77b6fd432f.jpg",
+      "align": "center",
+      "size": "full",
+      "aspectRatio": "1.51:1",
+      "aspectMode": "cover",
+      "backgroundColor": "#F4D588FF"
+    },
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "製作自己的藝術風格優惠券",
+          "align": "center",
+          "contents": []
+        }
+      ]
+    },
+    "footer": {
+      "type": "box",
+      "layout": "horizontal",
+      "contents": [
+        {
+          "type": "button",
+          "action": {
+            "type": "uri",
+            "label": "點我拍張照片📸",
+            "uri": "https://line.me/R/nv/camera/"
+          }
+        }
+      ]
+    }
+  }
