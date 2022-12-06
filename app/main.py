@@ -50,14 +50,25 @@ app.add_middleware(
 # LINE Bot
 app.include_router(line_app)
 
+from os.path import exists as file_exists
+
 @app.get("/")
 async def read_root():
-    message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
+    # message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
+    message = f"check file exists : {file_exists('app/ai/model/EfficientNetV2B3_1128.h5')}"
     return {"message": message}
+
+@app.post("/exists/")
+def read_path(path: str):
+    isExists = file_exists(path)
+    return {"path": path, "exists": isExists }
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+
+
 
 @app.post("/predict/image")
 async def predict_api(file: UploadFile):
