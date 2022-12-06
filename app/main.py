@@ -55,7 +55,7 @@ from os.path import exists as file_exists
 @app.get("/")
 async def read_root():
     # message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
-    message = f"check file exists : {file_exists('app/ai/model/EfficientNetV2B3_1128.h5')}"
+    message = f"check file exists : {file_exists('app/ai/model/EfficientNetV2B3_1128.h5')} , Python {version}"
     # directory of the script being run
     filepath = os.path.dirname(os.path.abspath(__file__))
     # "/home/user/backend/app"
