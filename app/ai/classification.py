@@ -1,5 +1,5 @@
 from io import BytesIO
-
+import cv2
 import numpy as np
 import tensorflow as tf
 from PIL import Image
@@ -12,10 +12,40 @@ def load_model():
     # model = tf.keras.applications.MobileNetV2(weights="imagenet")
     # 從 HDF5 檔案中載入模型
     # model = tf.keras.models.load_model('app/ai/model/EfficientNetV2B3_1128.h5')
-    model = tf.keras.models.load_model('app/ai/model/EfficientNetV2B3_1207_pb')
+    # model = tf.keras.models.load_model('app/ai/model/EfficientNetV2B3_1207_pb')
+    model = tf.saved_model.load('app/ai/model/EfficientNetV2B3.savedmodel')
 
     print("Model loaded")
     return model
+
+def predict2(image: Image.Image):
+    global model
+    if model is None:
+        model = load_model()
+
+    infer = model.signatures["serving_default"]
+    classes = ['asparagus', 'bambooshoots', 'betel', 'broccoli', 'cauliflower', 'chinesecabbage', 'chinesechives', 'custardapple', 'grape', 'greenhouse', 'greenonion', 'kale', 'lemon', 'lettuce', 'litchi', 'longan', 'loofah', 'mango', 'onion', 'others', 'papaya', 'passionfruit', 'pear', 'pennisetum', 'redbeans', 'roseapple', 'sesbania', 'soybeans', 'sunhemp', 'sweetpotato', 'taro', 'tea', 'waterbamboo']
+
+    # img = Image.open(response.raw)
+    img = image
+    img = np.array(img)
+    h, w = img.shape[:2]
+    z = min(h, w)
+    img = img[int(h/2)-int(z/2):int(h/2)+int(z/2), int(w/2)-int(z/2):int(w/2)+int(z/2)]
+    img = cv2.resize(img, (224, 224))
+    img = preprocess_input(img)
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    data[0] = img
+
+    prediction_prob = infer(tf.constant(data))['softmax']
+    pre = np.argmax(prediction_prob, axis=1)[0]
+    result = classes[pre]
+    print('預測結果為：', result)
+
+    response = {
+        "class" : result
+    }
+    return response
 
 def predict(image: Image.Image):
     global model

@@ -2,7 +2,7 @@ from typing import Union
 from fastapi import FastAPI, status, File, UploadFile, Request, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from .line.urls import line_app
-from .ai.classification import predict, read_imagefile
+from .ai.classification import predict, predict2, read_imagefile
 from .ai.styletransfer import styleTransfer
 # from .ai.circlegan import style_transfer
 
@@ -86,7 +86,9 @@ async def predict_api(file: UploadFile):
     if not extension:
         return "圖片請用 jpg、jpeg 或 png 格式!"
     image = read_imagefile(await file.read())
-    prediction = predict(image)
+    # prediction = predict(image)
+    prediction = predict2(image)
+    
     return prediction
 
 origin_img_folder = "static/origin/"
