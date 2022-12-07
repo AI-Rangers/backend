@@ -2,9 +2,13 @@ from fastapi import APIRouter, HTTPException, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
+from linebot.models import TextSendMessage
+
 from . import message_event, user_event, config
-# from .. import circlegan
+from ..ai.circlegan import style_transfer
+from ..ai.styletransfer import styleTransfer
 from google.cloud import storage
+from pathlib import Path
 
 
 line_bot_api = LineBotApi(config.LINE_CHANNEL_ACCESS_TOKEN)
@@ -39,6 +43,15 @@ def handle_follow(event) -> None:
         event (LINE Event Object): Refer to https://developers.line.biz/en/reference/messaging-api/#follow-event
     """
     user_event.handle_follow(event=event)
+    print('follow', event)
+    # 取得使用者個人資訊
+    profile = line_bot_api.get_profile(event.source.user_id)
+    print(profile.display_name)
+    print(profile.user_id)
+    print(profile.picture_url)
+    print(profile.status_message)
+    # 回傳歡迎訊息
+    # line_bot_api.reply_message(event.reply_token, TextSendMessage(f'Hi, {profile.display_name}'))
 
 @handler.add(UnfollowEvent)
 def handle_unfollow(event) -> None:
@@ -48,7 +61,6 @@ def handle_unfollow(event) -> None:
     """
     user_event.handle_unfollow(event=event)
 
-
 @handler.add(MessageEvent, message=(TextMessage))
 def handle_message(event) -> None:
     """Event - User sent message
@@ -56,6 +68,40 @@ def handle_message(event) -> None:
         event (LINE Event Object): Refer to https://developers.line.biz/en/reference/messaging-api/#message-event
     """
     message_event.handle_message(event=event)
+
+# 使用者傳送圖片
+@handler.add(event=MessageEvent, message=ImageMessage)
+def handle_message(event):
+    print('image', event)
+    # 取得訊息id
+    message_id = event.message.id
+    # 透過訊息id取得 line server上面的檔案
+    message_content = line_bot_api.get_message_content(message_id)
+    # 將圖片存到伺服器
+    with open(Path(f"static/line_imgs/{message_id}.jpg").absolute(), "wb") as f:
+        for chunk in message_content.iter_content():
+            f.write(chunk)
+
+    # 發送風格轉換的圖片給用戶
+    origin_img_folder = "static/line_imgs/"
+    styled_img_folder = "static/styled/"
+    img_name = f"{message_id}.jpg"
+    selected_style = "pink_style_1800.t7"
+    # processed_image = styleTransfer(origin_img_folder, styled_img_folder, img_name, selected_style)
+    # processed_image_path = f"{styled_img_folder}{processed_image}"
+
+    processed_image = style_transfer(f"{origin_img_folder}{img_name}")
+    processed_image_path = f"{styled_img_folder}{img_name}"
+    processed_image.save(processed_image_path)
+ 
+    print('processed_image_path')
+    print(processed_image_path)
+
+    img_url = f"https://f328-118-150-160-200.jp.ngrok.io/{processed_image_path}"
+    # img_url = f"https://api.puff.tw/{processed_image_path}"
+    print(f"{img_url}")
+    img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
+    line_bot_api.reply_message(event.reply_token, img_message)
 
 """
 # 暫時註解

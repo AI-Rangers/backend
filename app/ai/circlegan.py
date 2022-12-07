@@ -179,11 +179,11 @@ cg_model = None
 
 def load_model():
     # Load the checkpoints
-    gen_G = get_resnet_generator(name="generator_G")
-    gen_G.load_weights('model/liGan_G.h5')
+    cg_model = get_resnet_generator(name="generator_G")
+    cg_model.load_weights('app/ai/model/liGan_G.h5')
 
     print("Model loaded")
-    return cycle_gan_model
+    return cg_model
 
 def style_transfer(img_path):
     global cg_model
