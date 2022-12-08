@@ -166,3 +166,5 @@ ehthumbs.db
 .Trashes
 *.swp
 ._*
+
+*-firebase-*.json

@@ -38,3 +38,4 @@ tensorflow_addons
 google-cloud-storage
 
 imutils
+firebase_admin

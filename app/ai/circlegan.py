@@ -180,7 +180,8 @@ cg_model = None
 def load_model():
     # Load the checkpoints
     cg_model = get_resnet_generator(name="generator_G")
-    cg_model.load_weights('app/ai/model/liGan_G.h5')
+    # cg_model.load_weights('app/ai/model/liGan_G.h5')
+    cg_model.load_weights('app/ai/model/VangoghGan3_G_1208.h5')
 
     print("Model loaded")
     return cg_model

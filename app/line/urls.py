@@ -13,7 +13,7 @@ from pathlib import Path
 
 line_bot_api = LineBotApi(config.LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(config.LINE_CHANNEL_SECRET)
-
+firebase_key = config.SERVICE_ACCOUNT_KEY
 line_app = APIRouter()
 
 @line_app.post("/callback")
@@ -68,6 +68,16 @@ def handle_message(event) -> None:
         event (LINE Event Object): Refer to https://developers.line.biz/en/reference/messaging-api/#message-event
     """
     message_event.handle_message(event=event)
+
+# 接收事件 PostbackEvent
+@handler.add(event=PostbackEvent)
+def handle_message(event):
+    print('postback', event.postback)
+    print('----')
+    print('params', event.postback.params)
+    print('data', event.postback.data)
+
+
 
 # 使用者傳送圖片
 @handler.add(event=MessageEvent, message=ImageMessage)
@@ -136,3 +146,19 @@ def handle_image_message(event):
     line_bot_api.reply_message(event.reply_token, img_message)
 
 """
+
+
+# import firebase_admin 
+# from firebase_admin import credentials 
+# from firebase_admin import firestore 
+
+# p = Path(f"{firebase_key}").absolute()
+
+# print("p")
+# print(p)
+
+
+# cred = credentials.Certificate(f"{firebase_key}")
+# firebase_admin.initialize_app(cred)
+# firestore_client = firestore.client()
+

@@ -11,9 +11,9 @@ model = None
 def load_model():
     # model = tf.keras.applications.MobileNetV2(weights="imagenet")
     # 從 HDF5 檔案中載入模型
-    # model = tf.keras.models.load_model('app/ai/model/EfficientNetV2B3_1128.h5')
+    model = tf.keras.models.load_model('app/ai/model/EfficientNetV2B3_1128.h5')
     # model = tf.keras.models.load_model('app/ai/model/EfficientNetV2B3_1207_pb')
-    model = tf.saved_model.load('app/ai/model/EfficientNetV2B3.savedmodel')
+    # model = tf.saved_model.load('app/ai/model/EfficientNetV2B3.savedmodel')
 
     print("Model loaded")
     return model
