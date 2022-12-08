@@ -86,8 +86,8 @@ async def predict_api(file: UploadFile):
     if not extension:
         return "圖片請用 jpg、jpeg 或 png 格式!"
     image = read_imagefile(await file.read())
-    # prediction = predict(image)
-    prediction = predict2(image)
+    prediction = predict(image)
+    # prediction = predict2(image)
     
     return prediction
 
