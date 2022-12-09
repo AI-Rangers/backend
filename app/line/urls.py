@@ -107,8 +107,8 @@ def handle_message(event):
     print('processed_image_path')
     print(processed_image_path)
 
-    img_url = f"https://f328-118-150-160-200.jp.ngrok.io/{processed_image_path}"
-    # img_url = f"https://api.puff.tw/{processed_image_path}"
+    # img_url = f"https://f328-118-150-160-200.jp.ngrok.io/{processed_image_path}"
+    img_url = f"https://api.puff.tw/{processed_image_path}"
     print(f"{img_url}")
     img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
     line_bot_api.reply_message(event.reply_token, img_message)
