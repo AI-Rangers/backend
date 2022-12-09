@@ -1,7 +1,7 @@
 import re
 from linebot import LineBotApi
 from linebot.models import TextMessage, TextSendMessage
-from . import config
+from . import config, database
 from .models.message_request import MessageRequest
 from .skills import *
 from .skills import skills
@@ -29,6 +29,11 @@ def handle_message(event):
 
     # reply_token = event.reply_token
 
+    # 處理當前使用者對話場景
+    current_intent = log_user(msg_request.user_id)
+    if current_intent != '':
+        msg_request.intent = f'{current_intent} {msg_request.message}'
+
     # Text message
     if isinstance(event.message, TextMessage):
 
@@ -41,3 +46,39 @@ def handle_message(event):
         # Reply with same message
         # messages = TextSendMessage(text=user_message)
         # line_bot_api.reply_message(reply_token=reply_token, messages=messages)
+
+def log_user(user_id):
+    print("log_user 處理當前使用者對話場景")
+    print(user_id)
+    # 使用者資訊儲存到 DB
+    # database.add_city()
+    # database.get_member()
+
+    exists_member = database.exists_member(user_id)
+    profile = line_bot_api.get_profile(user_id)
+
+    print('len(exists_member)', len(exists_member))
+ 
+    if len(exists_member) == 0 :
+        create = {
+            u'PartitionKey': 'users',
+            u'RowKey': user_id,
+            u'DisplayName': profile.display_name,
+            u'CurrentIntent': '',
+            u'money': 0
+        }
+        database.update_member(create)
+        return ''
+    else:
+        intent = ''
+        if exists_member.get(u'CurrentIntent') is not None:
+            intent = exists_member[u'CurrentIntent']
+        update = {
+            u'PartitionKey': 'users',
+            u'RowKey': user_id,
+            u'DisplayName': profile.display_name,
+            u'CurrentIntent': intent,
+            u'money': exists_member.get(u'money')
+        }
+        database.update_member(update)
+        return intent

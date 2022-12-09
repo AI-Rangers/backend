@@ -1,0 +1,52 @@
+{
+    "type": "bubble",
+    "size": "kilo",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "發票兌獎小幫手",
+          "weight": "bold",
+          "color": "#1DB446",
+          "size": "sm"
+        },
+        {
+          "type": "text",
+          "text": "543",
+          "weight": "bold",
+          "size": "xxl",
+          "margin": "md"
+        },
+        {
+          "type": "text",
+          "text": "未中獎，總計中獎數: 6/30",
+          "size": "xs",
+          "color": "#aaaaaa",
+          "wrap": true
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "postback",
+            "label": "結束兌獎",
+            "data":"/finish"
+          },
+          "height": "sm",
+          "style": "secondary",
+          "margin": "xs",
+          "offsetTop": "xs",
+          "offsetBottom": "xs",
+          "offsetStart": "xs",
+          "offsetEnd": "xs",
+          "position": "relative"
+        }
+      ]
+    },
+    "styles": {
+      "footer": {
+        "separator": true
+      }
+    }
+  }

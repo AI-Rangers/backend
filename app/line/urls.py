@@ -4,11 +4,14 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from linebot.models import TextSendMessage
 
-from . import message_event, user_event, config
+from .models.message_request import MessageRequest
+from . import message_event, user_event, config, database
 from ..ai.circlegan import style_transfer
 from ..ai.styletransfer import styleTransfer
 from google.cloud import storage
 from pathlib import Path
+
+import json
 
 
 line_bot_api = LineBotApi(config.LINE_CHANNEL_ACCESS_TOKEN)
@@ -76,6 +79,19 @@ def handle_message(event):
     print('----')
     print('params', event.postback.params)
     print('data', event.postback.data)
+    msg_request = MessageRequest()
+    msg_request.intent = event.postback.data
+    msg_request.message = event.postback.data
+    msg_request.user_id = event.source.user_id
+
+    if event.postback.params != None:
+        msg_request.intent = msg_request.intent + ' ' + event.postback.params['date']
+        msg_request.message = msg_request.message + ' ' + event.postback.params['date']
+
+    func = message_event.get_message(msg_request)
+    line_bot_api.reply_message(event.reply_token, func)
+
+
 
 
 
@@ -111,7 +127,26 @@ def handle_message(event):
     img_url = f"https://api.puff.tw/{processed_image_path}"
     print(f"{img_url}")
     img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
-    line_bot_api.reply_message(event.reply_token, img_message)
+
+    msg_request = MessageRequest()
+    # msg_request.intent = event.postback.data
+    # msg_request.message = event.postback.data
+    msg_request.user_id = event.source.user_id
+
+    user = database.exists_member(msg_request.user_id)
+    user[u'money'] = 600
+    database.add_money(user)
+
+    # Flex Message
+    flexjson = Path("app/line/line_message_json/coupon.json").absolute()
+    flex = json.load(open(flexjson, 'r', encoding='utf-8'))
+    flex["hero"]["url"] = img_url
+    msg = FlexSendMessage(alt_text='兌獎結果', contents=flex)
+
+    # line_bot_api.reply_message(event.reply_token, img_message)
+    line_bot_api.reply_message(event.reply_token, msg)
+
+
 
 """
 # 暫時註解
@@ -146,19 +181,3 @@ def handle_image_message(event):
     line_bot_api.reply_message(event.reply_token, img_message)
 
 """
-
-
-# import firebase_admin 
-# from firebase_admin import credentials 
-# from firebase_admin import firestore 
-
-# p = Path(f"{firebase_key}").absolute()
-
-# print("p")
-# print(p)
-
-
-# cred = credentials.Certificate(f"{firebase_key}")
-# firebase_admin.initialize_app(cred)
-# firestore_client = firestore.client()
-

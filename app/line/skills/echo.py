@@ -7,5 +7,5 @@ from ..skills import add_skill
 @add_skill('{not_match}')
 def get(message_request: MessageRequest):
     return [
-        TextSendMessage(text=f'You said: {message_request.message}')
+        TextSendMessage(text=f'{message_request.message}')
     ]
