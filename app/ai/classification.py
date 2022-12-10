@@ -92,14 +92,18 @@ def predictions(preds):
 
     # 總共32個分類
     classes = {'asparagus': 0, 'bambooshoots': 1, 'betel': 2, 'broccoli': 3, 'cauliflower': 4, 'chinesecabbage': 5, 'chinesechives': 6, 'custardapple': 7, 'grape': 8, 'greenhouse': 9, 'greenonion': 10, 'kale': 11, 'lemon': 12, 'lettuce': 13, 'litchi': 14, 'longan': 15, 'loofah': 16, 'mango': 17, 'onion': 18, 'others': 19, 'papaya': 20, 'passionfruit': 21, 'pear': 22, 'pennisetum': 23, 'redbeans': 24, 'roseapple': 25, 'sesbania': 26, 'soybeans': 27, 'sunhemp': 28, 'sweetpotato': 29, 'taro': 30, 'tea': 31, 'waterbamboo': 32}
-    classes_list = [*classes.keys()]
+    en = [*classes.keys()]
     # print('classes_list', classes_list)
+    tw = ['蘆筍', '竹筍', '檳榔', '青花菜', '花椰菜', '結球白菜', '韭菜', '釋迦', '葡萄', '溫室', '蔥', 
+     '甘藍', '檸檬', '萵苣', '荔枝', '龍眼', '絲瓜', '芒果', '洋蔥', '非作物', '木瓜', '百香果', '梨', '狼尾草',
+     '紅豆', '蓮霧', '田菁', '毛豆', '太陽麻', '甘藷', '芋', '茶樹', '茭白筍']
 
     results = []
 
     # predicted_index = classes index : 0 - 31
     for predicted_index in sorted_:
-        predicted_label = classes_list[predicted_index]
+        # predicted_label = classes_list[predicted_index]
+        predicted_label = f"{tw[predicted_index]} {en[predicted_index]}"
         # print('predicted_index', predicted_index)
 
         item = []
