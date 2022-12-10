@@ -85,13 +85,6 @@ def exists_member(doc_key):
 
 
 def add_money(member):
-    # doc = {
-    #     u'PartitionKey': 'users',
-    #     u'RowKey': user_id,
-    #     u'DisplayName': profile.display_name,
-    #     u'CurrentIntent': ''
-    # }
-    # doc = member
     col_ref = db.collection(u'members')
     doc_ref = col_ref.document(member[u'RowKey'])
     doc = col_ref.document(doc_ref.id)
@@ -100,6 +93,27 @@ def add_money(member):
     doc.update(field_updates)
     print("doc_ref.id", doc_ref.id)
     # print("add money", doc.to_dict())
+
+def update_money(doc_key: str, amount: int):
+    col_ref = db.collection(u'members')
+    doc_ref_generator = col_ref.where(u'RowKey', u'==', doc_key).stream()
+
+    field_updates = {u'money': amount}
+
+    for doc_ref in doc_ref_generator:
+        doc_ref.reference.update(field_updates)
+
+    # docs = list(posts_ref.where('slug', '==', post['slug']).stream())
+    doc_ref = col_ref.document(doc_key)
+    # print("doc_ref.id", doc_ref.id)
+    doc = doc_ref.get()
+    if doc.exists:
+        print(f'Document data: {doc.to_dict()}')
+        data = doc.to_dict()
+        return data[u'money']
+    else:
+        print(u'No such document!')
+        return None
 
 
 def update_member(member):

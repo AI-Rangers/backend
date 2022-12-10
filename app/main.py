@@ -2,6 +2,7 @@ from typing import Union
 from fastapi import FastAPI, status, File, UploadFile, Request, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from .line.urls import line_app
+from .line import database
 from .ai.classification import predict, predict2, read_imagefile
 from .ai.styletransfer import styleTransfer
 from .ai.circlegan import style_transfer
@@ -78,6 +79,20 @@ def read_path(path: str):
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+# 取得會員金額
+@app.get("/member_money/{user_id}")
+def read_money(user_id: str):
+    user = database.exists_member(user_id)
+    money = user[u'money']
+    return {"money": money}
+
+# 更新會員金額
+@app.post("/money/set")
+async def set_money(user_id: str, amount: int):
+    money = database.update_money(user_id, amount)
+    # int or null
+    return {"money": money}
 
 @app.post("/predict/image")
 async def predict_api(file: UploadFile):
